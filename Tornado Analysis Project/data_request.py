@@ -12,7 +12,7 @@ no_tornado_days = pd.read_csv('non_tornado_sample.csv')
 
 
 def fetch_weather_data(location, start_date, end_date):
-    url = f'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{location}%2C%20US/{start_date}/{end_date}?unitGroup=us&include=days&key=6S5JW898CV7W6KGKPTEYQZPFK&contentType=json'
+    url = f'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{location}%2C%20US/{start_date}/{end_date}?unitGroup=us&include=days&key=key&contentType=json'
 
 
     try:
