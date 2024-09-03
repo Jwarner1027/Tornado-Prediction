@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #vis.vega-embed {
+      width: 100%;
+      display: flex;
+    }
+
+    #vis.vega-embed details,
+    #vis.vega-embed details summary {
+      position: relative;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-lite@5.17.0"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"background": "white", "view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-99e5ff6e746d5588655a1d3c7981b68b"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "Rank", "scale": {"scheme": "viridis"}, "type": "nominal"}, "tooltip": [{"field": "Rank", "type": "nominal"}, {"field": "Lower Limit", "type": "quantitative"}, {"field": "Upper Limit", "type": "quantitative"}], "x": {"field": "Lower Limit", "title": "Wind Speed (mph)", "type": "quantitative"}, "x2": {"field": "Upper Limit"}, "y": {"field": "Rank", "title": "Tornado Rank", "type": "nominal"}}, "height": 400, "title": "Tornado Rank Wind Speed Ranges", "width": 800, "$schema": "https://vega.github.io/schema/vega-lite/v5.17.0.json", "datasets": {"data-99e5ff6e746d5588655a1d3c7981b68b": [{"Rank": "F0", "Lower Limit": 40, "Upper Limit": 72}, {"Rank": "F1", "Lower Limit": 73, "Upper Limit": 112}, {"Rank": "F2", "Lower Limit": 113, "Upper Limit": 157}, {"Rank": "F3", "Lower Limit": 158, "Upper Limit": 206}, {"Rank": "F4", "Lower Limit": 207, "Upper Limit": 260}, {"Rank": "F5", "Lower Limit": 261, "Upper Limit": 318}, {"Rank": "EF0", "Lower Limit": 65, "Upper Limit": 85}, {"Rank": "EF1", "Lower Limit": 86, "Upper Limit": 110}, {"Rank": "EF2", "Lower Limit": 111, "Upper Limit": 135}, {"Rank": "EF3", "Lower Limit": 136, "Upper Limit": 165}, {"Rank": "EF4", "Lower Limit": 166, "Upper Limit": 200}, {"Rank": "EF5", "Lower Limit": 201, "Upper Limit": 325}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>

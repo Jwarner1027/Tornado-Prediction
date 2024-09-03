@@ -1,0 +1,69 @@
+import numpy as np
+columns_to_keep = ['YEAR', 'MONTH_NAME', 'BEGIN_DAY', 'STATE','EVENT_TYPE', 'BEGIN_DATE_TIME',
+                    'END_DATE_TIME', 'INJURIES_DIRECT', 'DEATHS_DIRECT', 'DAMAGE_PROPERTY',  'DAMAGE_CROPS', 'TOR_F_SCALE',
+                      'TOR_LENGTH', 'TOR_WIDTH', 'BEGIN_RANGE', 'BEGIN_LAT', 'BEGIN_LON']
+
+columns_to_drop = np.setdiff1d(all_storm_data.columns, columns_to_keep)
+
+new_storms_data = all_storm_data[columns_to_keep]
+
+new_storms_data.columns
+
+
+tornado_df = new_storms_data[new_storms_data['EVENT_TYPE'] == 'Tornado']
+tornado_df.count()
+
+
+tornado_df.dtypes
+
+tornado_df['BEGIN_DATE_TIME'] = tornado_df['BEGIN_DATE_TIME'].astype('datetime64[ns]')
+tornado_df['END_DATE_TIME'] = tornado_df['END_DATE_TIME'].astype('datetime64[ns]')
+
+tornado_df.head()
+
+
+
+tornado_df.dtypes
+
+
+tornado_df.count()
+
+tornado_df.isna().sum()
+
+
+
+historical_df = tornado_df[tornado_df['YEAR'].isin([1995,1996, 1997,1998 ,1999, 2000])]
+
+recent_df = tornado_df[tornado_df['YEAR'].isin([2019, 2020,2021 ,2022, 2023, 2024])]
+
+monthly_counts_historical = historical_df.groupby([tornado_df['YEAR'], historical_df['MONTH_NAME']]).size()
+historical_averages = monthly_counts_historical.to_frame(name='count').reset_index()
+yearly_averages_historical = historical_averages.groupby(['MONTH_NAME']).mean('count')
+
+monthly_counts_recent = recent_df.groupby([tornado_df['YEAR'], recent_df['MONTH_NAME']]).size()
+recent_averages = monthly_counts_recent.to_frame(name='count').reset_index()
+yearly_averages_recent = recent_averages.groupby(['MONTH_NAME']).mean('count')
+
+yearly_averages_recent
+
+base_chart = alt.Chart()
+
+# Define line for historical data
+historical_line = base_chart.mark_line().encode(
+  x='Month:N',
+  y='Average Tornadoes (Historical):Q',
+  color='blue',  # Optional: Set color for historical line
+)
+
+# Define line for recent data (similar structure)
+recent_line = base_chart.mark_line().encode(
+  x='Month:N',
+  y='Average Tornadoes (Recent):Q',
+  color='red'  # Optional: Set color for recent line
+)
+
+# Combine the lines into a single chart
+chart = alt.layer(historical_line, recent_line)
+
+
+chart
